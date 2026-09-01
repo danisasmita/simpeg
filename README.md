@@ -1,6 +1,6 @@
 # SIMPEG — Sistem Informasi Manajemen Kepegawaian
 
-Sistem informasi kepegawaian Universitas Muhammadiyah Lampung (UML). Backend ditulis dengan **Go** (arsitektur hexagonal) dan men-serve **React SPA** (Vite) dalam satu binary — tanpa Laravel, tanpa server PHP.
+Sistem informasi kepegawaian Universitas Muhammadiyah Lampung (UML). Backend ditulis dengan **Go** (arsitektur hexagonal) dan men-serve **React SPA** (Vite) dalam satu binary.
 
 ![Go](https://img.shields.io/badge/Go-1.26-00ADD8?logo=go&logoColor=white)
 ![Gin](https://img.shields.io/badge/Framework-Gin-00ADD8)
