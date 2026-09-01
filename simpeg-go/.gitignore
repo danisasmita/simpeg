@@ -1,0 +1,23 @@
+# Binary
+simpeg-go
+*.exe
+
+# Environment
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+
+# Test
+coverage.*
+*.test
+
+# Build
+/tmp/

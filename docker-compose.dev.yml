@@ -1,0 +1,134 @@
+# =============================================================
+# docker-compose.dev.yml — LOCAL DEVELOPMENT (single project)
+# Jalankan dengan: docker compose -f docker-compose.dev.yml up -d
+#
+# Satu project, semua service:
+#   db       → PostgreSQL 16 (:5433 host)
+#   redis    → Redis 7 (:6380 host)
+#   app      → Backend Go + SPA (:8080 container, jangan expose ke host)
+#   nginx    → Entry point :8080 → proxy ke Go :8080 + SPA + uploads
+#   node     → Vite HMR dev server (:5173)
+#   mailhog  → Email testing (UI :8025, SMTP :1025)
+# =============================================================
+
+name: simpeg
+
+services:
+  # ----------------------------------------------------------
+  # PostgreSQL
+  # ----------------------------------------------------------
+  db:
+    image: postgres:16-alpine
+    container_name: simpeg-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: simpeg
+      POSTGRES_USER: simpeg
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5433:5432"
+    volumes:
+      - simpeg-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U simpeg -d simpeg"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - simpeg-net
+
+  # ----------------------------------------------------------
+  # Redis
+  # ----------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: simpeg-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - simpeg-net
+
+  # ----------------------------------------------------------
+  # App — Backend Go + SPA
+  # ----------------------------------------------------------
+  app:
+    build:
+      context: ./simpeg-go
+      dockerfile: Dockerfile
+    container_name: simpeg-app
+    restart: unless-stopped
+    env_file:
+      - simpeg-go/.env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - simpeg-net
+
+  # ----------------------------------------------------------
+  # Nginx — Entry point :8000 → semua trafik ke Go
+  # ----------------------------------------------------------
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: simpeg-nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx/dev.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app
+    networks:
+      - simpeg-net
+
+  # ----------------------------------------------------------
+  # Node — Vite HMR dev server
+  # Buka http://localhost:5173 ; /api & /uploads di-proxy ke Go
+  # ----------------------------------------------------------
+  node:
+    image: node:20-alpine
+    container_name: simpeg-node
+    working_dir: /app
+    volumes:
+      - ./simpeg-go/frontend:/app
+    command: sh -c "npm install --legacy-peer-deps && npm run dev -- --host 0.0.0.0"
+    ports:
+      - "5173:5173"
+    networks:
+      - simpeg-net
+
+  # ----------------------------------------------------------
+  # Mailhog — Email testing
+  # ----------------------------------------------------------
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: simpeg-mailhog
+    restart: unless-stopped
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    networks:
+      - simpeg-net
+
+# ----------------------------------------------------------
+# Volumes
+# ----------------------------------------------------------
+volumes:
+  simpeg-db-data:
+
+# ----------------------------------------------------------
+# Networks
+# ----------------------------------------------------------
+networks:
+  simpeg-net:
+    name: simpeg-net
+    driver: bridge

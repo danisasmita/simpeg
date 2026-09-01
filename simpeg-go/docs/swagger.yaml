@@ -1,0 +1,3252 @@
+basePath: /api/v1
+definitions:
+  domain.Absensi:
+    properties:
+      check_in_at:
+        type: string
+      check_in_location:
+        type: string
+      check_in_photo:
+        type: string
+      check_out_at:
+        type: string
+      check_out_location:
+        type: string
+      check_out_photo:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      keterangan:
+        type: string
+      pegawai:
+        $ref: '#/definitions/domain.Pegawai'
+      pegawai_id:
+        type: integer
+      status:
+        type: string
+      tanggal:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  domain.AuditLog:
+    properties:
+      action:
+        type: string
+      actor:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      ip_address:
+        type: string
+      module:
+        type: string
+      new_values:
+        items:
+          type: integer
+        type: array
+      old_values:
+        items:
+          type: integer
+        type: array
+      resource_id:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  domain.Cuti:
+    properties:
+      alasan:
+        type: string
+      catatan_persetujuan:
+        type: string
+      created_at:
+        type: string
+      disetujui_oleh:
+        type: integer
+      disetujui_pada:
+        type: string
+      id:
+        type: integer
+      jenis:
+        type: string
+      jumlah_hari:
+        type: integer
+      pegawai:
+        $ref: '#/definitions/domain.Pegawai'
+      pegawai_id:
+        type: integer
+      status:
+        type: string
+      tanggal_mulai:
+        type: string
+      tanggal_selesai:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  domain.DashboardStats:
+    properties:
+      absensi_hari_ini:
+        type: integer
+      cuti_menunggu:
+        type: integer
+      pegawai_aktif:
+        type: integer
+      total_jabatan:
+        type: integer
+      total_pegawai:
+        type: integer
+      total_unit_kerja:
+        type: integer
+    type: object
+  domain.DokumenPegawai:
+    properties:
+      created_at:
+        type: string
+      file_name:
+        type: string
+      file_path:
+        type: string
+      file_size:
+        type: integer
+      file_type:
+        type: string
+      id:
+        type: integer
+      kategori:
+        type: string
+      keterangan:
+        type: string
+      nama_dokumen:
+        type: string
+      nomor_dokumen:
+        type: string
+      pegawai_id:
+        type: integer
+      tanggal_dokumen:
+        type: string
+      tanggal_expired:
+        type: string
+      updated_at:
+        type: string
+      uploaded_by:
+        type: integer
+    type: object
+  domain.Golongan:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      kode:
+        type: string
+      nama:
+        type: string
+      updated_at:
+        type: string
+      urutan:
+        type: integer
+    type: object
+  domain.Jabatan:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      is_aktif:
+        type: boolean
+      jenis:
+        type: string
+      kode:
+        type: string
+      nama:
+        type: string
+      unit_kerja_id:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  domain.LaporanPegawaiRow:
+    properties:
+      email_institusi:
+        type: string
+      golongan:
+        type: string
+      id:
+        type: integer
+      jabatan:
+        type: string
+      jenis_kelamin:
+        type: string
+      nama_lengkap:
+        type: string
+      nidn:
+        type: string
+      nip:
+        type: string
+      nomor_hp:
+        type: string
+      status_aktif:
+        type: string
+      status_kepegawaian:
+        type: string
+      unit_kerja:
+        type: string
+    type: object
+  domain.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  domain.LoginResponse:
+    properties:
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/domain.User'
+    type: object
+  domain.Pegawai:
+    properties:
+      agama:
+        type: string
+      alamat_domisili:
+        type: string
+      alamat_ktp:
+        type: string
+      created_at:
+        type: string
+      created_by:
+        type: integer
+      email_institusi:
+        type: string
+      email_pribadi:
+        type: string
+      foto:
+        type: string
+      foto_url:
+        type: string
+      golongan:
+        $ref: '#/definitions/domain.Golongan'
+      golongan_id:
+        type: integer
+      hubungan_kontak_darurat:
+        type: string
+      id:
+        type: integer
+      jabatan:
+        $ref: '#/definitions/domain.Jabatan'
+      jabatan_id:
+        type: integer
+      jenis_kelamin:
+        type: string
+      kewarganegaraan:
+        type: string
+      nama_kontak_darurat:
+        type: string
+      nama_lengkap:
+        type: string
+      nama_panggilan:
+        type: string
+      nidn:
+        type: string
+      nik:
+        type: string
+      nip:
+        type: string
+      nomor_bpjs_kesehatan:
+        type: string
+      nomor_bpjs_ketenagakerjaan:
+        type: string
+      nomor_hp:
+        type: string
+      nomor_telp_darurat:
+        type: string
+      npwp:
+        type: string
+      status_aktif:
+        type: string
+      status_kepegawaian:
+        allOf:
+        - $ref: '#/definitions/domain.StatusKepegawaian'
+        description: Relations (for detail view)
+      status_kepegawaian_id:
+        type: integer
+      status_pernikahan:
+        type: string
+      tanggal_lahir:
+        type: string
+      tanggal_masuk:
+        type: string
+      tanggal_pensiun:
+        type: string
+      tanggal_tmt_pns:
+        type: string
+      tempat_lahir:
+        type: string
+      unit_kerja:
+        $ref: '#/definitions/domain.UnitKerja'
+      unit_kerja_id:
+        type: integer
+      updated_at:
+        type: string
+      updated_by:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  domain.Permission:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  domain.RiwayatGolongan:
+    properties:
+      created_at:
+        type: string
+      created_by:
+        type: integer
+      dokumen_sk:
+        type: string
+      golongan_id:
+        type: integer
+      id:
+        type: integer
+      is_aktif:
+        type: boolean
+      keterangan:
+        type: string
+      no_sk:
+        type: string
+      pegawai_id:
+        type: integer
+      tanggal_mulai:
+        type: string
+      tanggal_selesai:
+        type: string
+      tanggal_sk:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  domain.RiwayatJabatan:
+    properties:
+      created_at:
+        type: string
+      created_by:
+        type: integer
+      dokumen_sk:
+        type: string
+      golongan_id:
+        type: integer
+      id:
+        type: integer
+      is_aktif:
+        type: boolean
+      jabatan_id:
+        type: integer
+      keterangan:
+        type: string
+      no_sk:
+        type: string
+      pegawai_id:
+        type: integer
+      tanggal_mulai:
+        type: string
+      tanggal_selesai:
+        type: string
+      tanggal_sk:
+        type: string
+      unit_kerja_id:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  domain.RiwayatPelatihan:
+    properties:
+      created_at:
+        type: string
+      created_by:
+        type: integer
+      dokumen_sertifikat:
+        type: string
+      id:
+        type: integer
+      jenis:
+        type: string
+      jumlah_jam:
+        type: integer
+      nama_pelatihan:
+        type: string
+      nomor_sertifikat:
+        type: string
+      pegawai_id:
+        type: integer
+      penyelenggara:
+        type: string
+      tanggal_mulai:
+        type: string
+      tanggal_selesai:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  domain.RiwayatPendidikan:
+    properties:
+      created_at:
+        type: string
+      created_by:
+        type: integer
+      dokumen_ijazah:
+        type: string
+      fakultas:
+        type: string
+      id:
+        type: integer
+      ipk:
+        type: string
+      is_pendidikan_terakhir:
+        type: boolean
+      jenjang:
+        type: string
+      jurusan_prodi:
+        type: string
+      nama_institusi:
+        type: string
+      nomor_ijazah:
+        type: string
+      pegawai_id:
+        type: integer
+      tahun_lulus:
+        type: integer
+      tahun_masuk:
+        type: integer
+      tanggal_ijazah:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  domain.Role:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      permissions:
+        items:
+          type: string
+        type: array
+      updated_at:
+        type: string
+    type: object
+  domain.StatusKepegawaian:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      is_aktif:
+        type: boolean
+      kode:
+        type: string
+      nama:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  domain.UnitKerja:
+    properties:
+      children:
+        items:
+          $ref: '#/definitions/domain.UnitKerja'
+        type: array
+      created_at:
+        type: string
+      id:
+        type: integer
+      is_aktif:
+        type: boolean
+      kode:
+        type: string
+      nama:
+        type: string
+      parent_id:
+        type: integer
+      singkatan:
+        type: string
+      tipe:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  domain.User:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      pegawai_id:
+        type: integer
+      role:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  http.CheckInRequest:
+    properties:
+      location:
+        type: string
+      pegawai_id:
+        type: integer
+      photo:
+        type: string
+    type: object
+  http.CheckOutRequest:
+    properties:
+      location:
+        type: string
+      pegawai_id:
+        type: integer
+      photo:
+        type: string
+    type: object
+  http.ConfirmPasswordRequest:
+    properties:
+      password:
+        type: string
+    type: object
+  http.CutiApproveRequest:
+    properties:
+      catatan:
+        type: string
+      status:
+        type: string
+    type: object
+  http.CutiStoreRequest:
+    properties:
+      alasan:
+        type: string
+      jenis:
+        type: string
+      jumlah_hari:
+        type: integer
+      pegawai_id:
+        type: integer
+      tanggal_mulai:
+        type: string
+      tanggal_selesai:
+        type: string
+    type: object
+  http.DeleteAccountRequest:
+    properties:
+      password:
+        type: string
+    type: object
+  http.EmailVerifyRequest:
+    properties:
+      token:
+        type: string
+    required:
+    - token
+    type: object
+  http.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  http.ForgotPasswordRequest:
+    properties:
+      email:
+        type: string
+    required:
+    - email
+    type: object
+  http.GeocodeReverseResponse:
+    properties:
+      address:
+        type: string
+      detail:
+        properties:
+          city:
+            type: string
+          country:
+            type: string
+          road:
+            type: string
+          state:
+            type: string
+          village:
+            type: string
+        type: object
+    type: object
+  http.MessageResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  http.PasswordUpdateRequest:
+    properties:
+      current_password:
+        type: string
+      password:
+        type: string
+      password_confirmation:
+        type: string
+    type: object
+  http.PegawaiStoreRequest:
+    properties:
+      agama:
+        type: string
+      alamat_domisili:
+        type: string
+      alamat_ktp:
+        type: string
+      create_account:
+        type: boolean
+      created_at:
+        type: string
+      created_by:
+        type: integer
+      email_institusi:
+        type: string
+      email_pribadi:
+        type: string
+      foto:
+        type: string
+      foto_url:
+        type: string
+      golongan:
+        $ref: '#/definitions/domain.Golongan'
+      golongan_id:
+        type: integer
+      hubungan_kontak_darurat:
+        type: string
+      id:
+        type: integer
+      jabatan:
+        $ref: '#/definitions/domain.Jabatan'
+      jabatan_id:
+        type: integer
+      jenis_kelamin:
+        type: string
+      kewarganegaraan:
+        type: string
+      nama_kontak_darurat:
+        type: string
+      nama_lengkap:
+        type: string
+      nama_panggilan:
+        type: string
+      nidn:
+        type: string
+      nik:
+        type: string
+      nip:
+        type: string
+      nomor_bpjs_kesehatan:
+        type: string
+      nomor_bpjs_ketenagakerjaan:
+        type: string
+      nomor_hp:
+        type: string
+      nomor_telp_darurat:
+        type: string
+      npwp:
+        type: string
+      role:
+        type: string
+      status_aktif:
+        type: string
+      status_kepegawaian:
+        allOf:
+        - $ref: '#/definitions/domain.StatusKepegawaian'
+        description: Relations (for detail view)
+      status_kepegawaian_id:
+        type: integer
+      status_pernikahan:
+        type: string
+      tanggal_lahir:
+        type: string
+      tanggal_masuk:
+        type: string
+      tanggal_pensiun:
+        type: string
+      tanggal_tmt_pns:
+        type: string
+      tempat_lahir:
+        type: string
+      unit_kerja:
+        $ref: '#/definitions/domain.UnitKerja'
+      unit_kerja_id:
+        type: integer
+      updated_at:
+        type: string
+      updated_by:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  http.ProfileResponse:
+    properties:
+      permissions:
+        items:
+          type: string
+        type: array
+      user:
+        $ref: '#/definitions/domain.User'
+    type: object
+  http.ProfileUpdateRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+    type: object
+  http.RegisterRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        minLength: 8
+        type: string
+      role:
+        type: string
+    required:
+    - email
+    - name
+    - password
+    type: object
+  http.ResetPasswordRequest:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 8
+        type: string
+      password_confirmation:
+        type: string
+      token:
+        type: string
+    required:
+    - email
+    - password
+    - password_confirmation
+    - token
+    type: object
+  http.RoleStoreRequest:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      permissions:
+        items:
+          type: string
+        type: array
+    type: object
+  http.TokenMessageResponse:
+    properties:
+      message:
+        type: string
+      token:
+        type: string
+    type: object
+  http.VerifiedResponse:
+    properties:
+      data:
+        properties:
+          message:
+            type: string
+          verified:
+            type: boolean
+        type: object
+    type: object
+host: localhost:8000
+info:
+  contact:
+    name: SIMPEG UML
+  description: Backend API Sistem Informasi Manajemen Kepegawaian Universitas Muhammadiyah
+    Lampung (Gin + GORM).
+  termsOfService: http://simpeg.uml.ac.id
+  title: SIMPEG UML API
+  version: "1.0"
+paths:
+  /absensi/{pegawaiId}/history:
+    get:
+      description: Rentang default 30 hari terakhir; gunakan `from`/`to` (YYYY-MM-DD)
+        untuk rentang tertentu.
+      parameters:
+      - description: ID pegawai
+        in: path
+        name: pegawaiId
+        required: true
+        type: integer
+      - description: Tanggal awal (YYYY-MM-DD)
+        in: query
+        name: from
+        type: string
+      - description: Tanggal akhir (YYYY-MM-DD)
+        in: query
+        name: to
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Absensi'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Riwayat absensi pegawai
+      tags:
+      - Absensi
+  /absensi/check-in:
+    post:
+      consumes:
+      - application/json
+      description: Mencatat kehadiran masuk pegawai. `photo` berupa data URI/base64
+        untuk wajah (opsional).
+      parameters:
+      - description: Data absen masuk
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/http.CheckInRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Absensi'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Absen masuk
+      tags:
+      - Absensi
+  /absensi/check-out:
+    post:
+      consumes:
+      - application/json
+      description: Mencatat kehadiran pulang pegawai. `photo` berupa data URI/base64
+        untuk wajah (opsional).
+      parameters:
+      - description: Data absen pulang
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/http.CheckOutRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Absensi'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Absen pulang
+      tags:
+      - Absensi
+  /audit-logs:
+    get:
+      description: 'Jejak transaksi bisnis pengguna. Filter: module, action, user_id,
+        from, to (YYYY-MM-DD). Respons `{data, total, page, limit}`.'
+      parameters:
+      - description: Halaman (default 1)
+        in: query
+        name: page
+        type: integer
+      - description: Jumlah per halaman (default 20, maks 100)
+        in: query
+        name: limit
+        type: integer
+      - description: Filter modul (mis. PEGAWAI, CUTI)
+        in: query
+        name: module
+        type: string
+      - description: Filter aksi (mis. PEGAWAI_UPDATE, CUTI_APPROVE)
+        in: query
+        name: action
+        type: string
+      - description: Filter ID pengguna
+        in: query
+        name: user_id
+        type: integer
+      - description: Tanggal awal (YYYY-MM-DD)
+        in: query
+        name: from
+        type: string
+      - description: Tanggal akhir (YYYY-MM-DD)
+        in: query
+        name: to
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.AuditLog'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Daftar audit log
+      tags:
+      - Audit Log
+  /auth/account:
+    delete:
+      consumes:
+      - application/json
+      description: Menghapus akun user yang sedang login setelah verifikasi password.
+      parameters:
+      - description: Konfirmasi password
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/http.DeleteAccountRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.MessageResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Hapus akun
+      tags:
+      - Auth
+  /auth/confirm-password:
+    post:
+      consumes:
+      - application/json
+      description: Memvalidasi password saat ini (dipakai sebelum aksi sensitif).
+      parameters:
+      - description: Password saat ini
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/http.ConfirmPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Konfirmasi password
+      tags:
+      - Auth
+  /auth/email/verify:
+    post:
+      consumes:
+      - application/json
+      description: Memverifikasi email menggunakan token dari verify-notification.
+      parameters:
+      - description: Token verifikasi
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/http.EmailVerifyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.VerifiedResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      summary: Verifikasi email
+      tags:
+      - Auth
+  /auth/email/verify-notification:
+    post:
+      description: Membuat dan mengirim token verifikasi email untuk user yang sedang
+        login.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.TokenMessageResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Kirim ulang link verifikasi email
+      tags:
+      - Auth
+  /auth/forgot-password:
+    post:
+      consumes:
+      - application/json
+      description: Mengirim token reset password ke email. Tanpa SMTP (dev), token
+        dikembalikan pada respons.
+      parameters:
+      - description: Email terdaftar
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/http.ForgotPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.TokenMessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      summary: Lupa password
+      tags:
+      - Auth
+  /auth/google:
+    get:
+      description: Mengalihkan ke halaman otorisasi Google OAuth2. Pada sukses, browser
+        diarahkan ulang ke frontend dengan token JWT.
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Redirect ke Google OAuth2
+          schema:
+            type: string
+      summary: Login Google (redirect)
+      tags:
+      - Auth
+  /auth/google/callback:
+    get:
+      description: Dipanggil Google setelah otorisasi; menukar `code` dengan token
+        dan mengembalikan JWT ke frontend via redirect.
+      parameters:
+      - description: Kode otorisasi dari Google
+        in: query
+        name: code
+        required: true
+        type: string
+      - description: State anti-CSRF
+        in: query
+        name: state
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Redirect ke frontend dengan token JWT
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      summary: Callback Google OAuth2
+      tags:
+      - Auth
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Mengautentikasi pengguna dan mengembalikan token JWT beserta data
+        user.
+      parameters:
+      - description: Kredensial login
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      summary: Login pengguna
+      tags:
+      - Auth
+  /auth/password:
+    put:
+      consumes:
+      - application/json
+      description: Mengganti password user yang sedang login setelah memverifikasi
+        password saat ini.
+      parameters:
+      - description: Data password
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/http.PasswordUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Ubah password
+      tags:
+      - Auth
+  /auth/profile:
+    get:
+      description: Mengembalikan data user yang sedang login beserta daftar nama permission.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.ProfileResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Lihat profil & permission
+      tags:
+      - Auth
+    put:
+      consumes:
+      - application/json
+      description: Mengubah nama dan email user yang sedang login.
+      parameters:
+      - description: Data profil
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/http.ProfileUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Perbarui profil
+      tags:
+      - Auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Membuat akun baru dan langsung mengembalikan token JWT.
+      parameters:
+      - description: Data registrasi
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/http.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      summary: Registrasi pengguna baru
+      tags:
+      - Auth
+  /auth/reset-password:
+    post:
+      consumes:
+      - application/json
+      description: Menetapkan password baru menggunakan token dari forgot-password.
+      parameters:
+      - description: Data reset
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/http.ResetPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      summary: Reset password
+      tags:
+      - Auth
+  /cuti:
+    get:
+      description: Tanpa `pegawai_id` mengembalikan list semua cuti (paginasi, filter
+        status). Dengan `pegawai_id` mengembalikan cuti milik pegawai tersebut.
+      parameters:
+      - description: Filter ID pegawai
+        in: query
+        name: pegawai_id
+        type: integer
+      - description: Halaman (default 1)
+        in: query
+        name: page
+        type: integer
+      - description: Jumlah per halaman (default 20, maks 100)
+        in: query
+        name: limit
+        type: integer
+      - description: Filter status
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Cuti'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Daftar cuti
+      tags:
+      - Cuti
+    post:
+      consumes:
+      - application/json
+      description: 'Self-service: admin/operator (HRD) bisa ajukan atas nama siapa
+        pun; pegawai/dosen/pimpinan WAJIB atas nama sendiri (pegawai_id dipaksa milik
+        akun yang login). Jenis cuti: tahunan, sakit, melahirkan, besar, alasan_penting.'
+      parameters:
+      - description: Data pengajuan cuti
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/http.CutiStoreRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Cuti'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Ajukan cuti
+      tags:
+      - Cuti
+  /cuti/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: 'Status: `disetujui` atau `ditolak`.'
+      parameters:
+      - description: ID cuti
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Keputusan verifikasi
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/http.CutiApproveRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Setujui/tolak cuti
+      tags:
+      - Cuti
+  /dashboard/stats:
+    get:
+      description: Ringkasan jumlah pegawai, unit kerja, golongan, dan metrik lainnya.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.DashboardStats'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Statistik dashboard
+      tags:
+      - Dashboard
+  /dokumen-pegawai/{id}:
+    delete:
+      parameters:
+      - description: ID dokumen
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Hapus dokumen pegawai
+      tags:
+      - Dokumen Pegawai
+    get:
+      parameters:
+      - description: ID dokumen
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.DokumenPegawai'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Detail dokumen pegawai
+      tags:
+      - Dokumen Pegawai
+    put:
+      consumes:
+      - multipart/form-data
+      description: Multipart/form-data; kosongkan field yang tidak diubah. Tanpa file
+        baru, dokumen lama tetap dipakai.
+      parameters:
+      - description: ID dokumen
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Berkas dokumen baru
+        in: formData
+        name: file
+        type: file
+      - description: Nama dokumen
+        in: formData
+        name: nama_dokumen
+        type: string
+      - description: Kategori
+        in: formData
+        name: kategori
+        type: string
+      - description: Nomor dokumen
+        in: formData
+        name: nomor_dokumen
+        type: string
+      - description: Tanggal dokumen (YYYY-MM-DD)
+        in: formData
+        name: tanggal_dokumen
+        type: string
+      - description: Tanggal kedaluwarsa (YYYY-MM-DD)
+        in: formData
+        name: tanggal_expired
+        type: string
+      - description: Keterangan
+        in: formData
+        name: keterangan
+        type: string
+      - description: Path file alternatif
+        in: formData
+        name: file_path
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.DokumenPegawai'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Ubah dokumen pegawai
+      tags:
+      - Dokumen Pegawai
+  /dokumen-pegawai/{id}/download:
+    get:
+      parameters:
+      - description: ID dokumen
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Unduh berkas dokumen
+      tags:
+      - Dokumen Pegawai
+  /geocode/reverse:
+    get:
+      description: Menerjemahkan koordinat lat/lon menjadi alamat via Nominatim (OpenStreetMap).
+      parameters:
+      - description: Latitude
+        in: query
+        name: lat
+        required: true
+        type: string
+      - description: Longitude
+        in: query
+        name: lon
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.GeocodeReverseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "502":
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      summary: Reverse geocoding
+      tags:
+      - Geocode
+  /golongan:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Golongan'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Daftar golongan
+      tags:
+      - Master Data
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Data golongan (kode, nama)
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Golongan'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Golongan'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Tambah golongan
+      tags:
+      - Master Data
+  /golongan/{id}:
+    delete:
+      parameters:
+      - description: ID golongan
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Hapus golongan
+      tags:
+      - Master Data
+    get:
+      parameters:
+      - description: ID golongan
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Golongan'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Detail golongan
+      tags:
+      - Master Data
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID golongan
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Data golongan
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Golongan'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Golongan'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Ubah golongan
+      tags:
+      - Master Data
+  /health:
+    get:
+      description: Mengecek ketersediaan layanan backend.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: status ok
+          schema:
+            type: string
+      summary: Health check
+      tags:
+      - Health
+  /jabatan:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Jabatan'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Daftar jabatan
+      tags:
+      - Master Data
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Data jabatan (kode, nama, tipe)
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Jabatan'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Jabatan'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Tambah jabatan
+      tags:
+      - Master Data
+  /jabatan/{id}:
+    delete:
+      parameters:
+      - description: ID jabatan
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Hapus jabatan
+      tags:
+      - Master Data
+    get:
+      parameters:
+      - description: ID jabatan
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Jabatan'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Detail jabatan
+      tags:
+      - Master Data
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID jabatan
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Data jabatan
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Jabatan'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Jabatan'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Ubah jabatan
+      tags:
+      - Master Data
+  /laporan/pegawai:
+    get:
+      description: Daftar pegawai untuk laporan dengan ringkasan. Respons berbentuk
+        `{data, total, summary}`.
+      parameters:
+      - description: Filter status kepegawaian aktif
+        in: query
+        name: status_aktif
+        type: string
+      - description: Filter unit kerja
+        in: query
+        name: unit_kerja_id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.LaporanPegawaiRow'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Laporan data pegawai
+      tags:
+      - Laporan
+  /laporan/pegawai/export:
+    get:
+      description: Mengunduh laporan pegawai dalam format CSV (UTF-8 BOM, dikonsumsi
+        Excel).
+      parameters:
+      - description: Filter status kepegawaian aktif
+        in: query
+        name: status_aktif
+        type: string
+      - description: Filter unit kerja
+        in: query
+        name: unit_kerja_id
+        type: integer
+      produces:
+      - text/csv
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Export laporan pegawai (CSV)
+      tags:
+      - Laporan
+  /pegawai:
+    get:
+      description: 'List pegawai mendukung paginasi dan filter: search, status_aktif,
+        unit_kerja_id, jabatan_id, golongan_id.'
+      parameters:
+      - description: Halaman (default 1)
+        in: query
+        name: page
+        type: integer
+      - description: Jumlah per halaman (default 15, maks 100)
+        in: query
+        name: limit
+        type: integer
+      - description: Kata kunci pencarian
+        in: query
+        name: search
+        type: string
+      - description: Filter status aktif
+        in: query
+        name: status_aktif
+        type: string
+      - description: Filter unit kerja
+        in: query
+        name: unit_kerja_id
+        type: integer
+      - description: Filter jabatan
+        in: query
+        name: jabatan_id
+        type: integer
+      - description: Filter golongan
+        in: query
+        name: golongan_id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Pegawai'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Daftar pegawai
+      tags:
+      - Pegawai
+    post:
+      consumes:
+      - multipart/form-data
+      description: Menerima JSON ataupun multipart (field `data` berisi JSON pegawai,
+        `foto` file JPG/PNG maks 2MB). Foto disimpan dengan nama unik.
+      parameters:
+      - description: Data pegawai (opsi create_account & role untuk membuat akun user)
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/http.PegawaiStoreRequest'
+      - description: Foto pegawai (JPG/PNG, maks 2MB)
+        in: formData
+        name: foto
+        type: file
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Pegawai'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Tambah pegawai
+      tags:
+      - Pegawai
+  /pegawai/{id}:
+    delete:
+      parameters:
+      - description: ID pegawai
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Hapus pegawai
+      tags:
+      - Pegawai
+    get:
+      parameters:
+      - description: ID pegawai
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Pegawai'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Detail pegawai
+      tags:
+      - Pegawai
+    put:
+      consumes:
+      - multipart/form-data
+      description: Menerima JSON ataupun multipart (field `data` berisi JSON pegawai,
+        `foto` file baru opsional).
+      parameters:
+      - description: ID pegawai
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Data pegawai
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/http.PegawaiStoreRequest'
+      - description: Foto pegawai baru (JPG/PNG, maks 2MB)
+        in: formData
+        name: foto
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Pegawai'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Ubah pegawai
+      tags:
+      - Pegawai
+  /pegawai/{id}/dokumen:
+    get:
+      parameters:
+      - description: ID pegawai
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.DokumenPegawai'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Daftar dokumen pegawai
+      tags:
+      - Dokumen Pegawai
+    post:
+      consumes:
+      - multipart/form-data
+      description: Multipart/form-data. File wajib (kecuali `file_path` diisi); ekstensi
+        diizinkan pdf/jpg/jpeg/png/doc/docx/xls/xlsx, maks 10MB.
+      parameters:
+      - description: ID pegawai
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Berkas dokumen
+        in: formData
+        name: file
+        type: file
+      - description: Nama dokumen
+        in: formData
+        name: nama_dokumen
+        required: true
+        type: string
+      - description: Kategori (default lainnya)
+        in: formData
+        name: kategori
+        type: string
+      - description: Nomor dokumen
+        in: formData
+        name: nomor_dokumen
+        type: string
+      - description: Tanggal dokumen (YYYY-MM-DD)
+        in: formData
+        name: tanggal_dokumen
+        type: string
+      - description: Tanggal kedaluwarsa (YYYY-MM-DD)
+        in: formData
+        name: tanggal_expired
+        type: string
+      - description: Keterangan
+        in: formData
+        name: keterangan
+        type: string
+      - description: Path file alternatif bila tidak upload
+        in: formData
+        name: file_path
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.DokumenPegawai'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Upload dokumen pegawai
+      tags:
+      - Dokumen Pegawai
+  /pegawai/{id}/riwayat-golongan:
+    get:
+      parameters:
+      - description: ID pegawai
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.RiwayatGolongan'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Daftar riwayat golongan pegawai
+      tags:
+      - Riwayat Golongan
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID pegawai
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Data riwayat golongan
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.RiwayatGolongan'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.RiwayatGolongan'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Tambah riwayat golongan pegawai
+      tags:
+      - Riwayat Golongan
+  /pegawai/{id}/riwayat-jabatan:
+    get:
+      parameters:
+      - description: ID pegawai
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.RiwayatJabatan'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Daftar riwayat jabatan pegawai
+      tags:
+      - Riwayat Jabatan
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID pegawai
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Data riwayat jabatan
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.RiwayatJabatan'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.RiwayatJabatan'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Tambah riwayat jabatan pegawai
+      tags:
+      - Riwayat Jabatan
+  /pegawai/{id}/riwayat-pelatihan:
+    get:
+      parameters:
+      - description: ID pegawai
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.RiwayatPelatihan'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Daftar riwayat pelatihan pegawai
+      tags:
+      - Riwayat Pelatihan
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID pegawai
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Data riwayat pelatihan
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.RiwayatPelatihan'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.RiwayatPelatihan'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Tambah riwayat pelatihan pegawai
+      tags:
+      - Riwayat Pelatihan
+  /pegawai/{id}/riwayat-pendidikan:
+    get:
+      parameters:
+      - description: ID pegawai
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.RiwayatPendidikan'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Daftar riwayat pendidikan pegawai
+      tags:
+      - Riwayat Pendidikan
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID pegawai
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Data riwayat pendidikan
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.RiwayatPendidikan'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.RiwayatPendidikan'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Tambah riwayat pendidikan pegawai
+      tags:
+      - Riwayat Pendidikan
+  /riwayat-golongan/{id}:
+    delete:
+      parameters:
+      - description: ID riwayat golongan
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Hapus riwayat golongan
+      tags:
+      - Riwayat Golongan
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID riwayat golongan
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Data riwayat golongan
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.RiwayatGolongan'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.RiwayatGolongan'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Ubah riwayat golongan
+      tags:
+      - Riwayat Golongan
+  /riwayat-jabatan/{id}:
+    delete:
+      parameters:
+      - description: ID riwayat jabatan
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Hapus riwayat jabatan
+      tags:
+      - Riwayat Jabatan
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID riwayat jabatan
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Data riwayat jabatan
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.RiwayatJabatan'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.RiwayatJabatan'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Ubah riwayat jabatan
+      tags:
+      - Riwayat Jabatan
+  /riwayat-pelatihan/{id}:
+    delete:
+      parameters:
+      - description: ID riwayat pelatihan
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Hapus riwayat pelatihan
+      tags:
+      - Riwayat Pelatihan
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID riwayat pelatihan
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Data riwayat pelatihan
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.RiwayatPelatihan'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.RiwayatPelatihan'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Ubah riwayat pelatihan
+      tags:
+      - Riwayat Pelatihan
+  /riwayat-pendidikan/{id}:
+    delete:
+      parameters:
+      - description: ID riwayat pendidikan
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Hapus riwayat pendidikan
+      tags:
+      - Riwayat Pendidikan
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID riwayat pendidikan
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Data riwayat pendidikan
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.RiwayatPendidikan'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.RiwayatPendidikan'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Ubah riwayat pendidikan
+      tags:
+      - Riwayat Pendidikan
+  /roles:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Role'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Daftar role
+      tags:
+      - Roles & Permissions
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Data role (name, description, permissions)
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/http.RoleStoreRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Role'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Buat role baru
+      tags:
+      - Roles & Permissions
+  /roles/{name}:
+    delete:
+      description: Role `admin` tidak dapat dihapus.
+      parameters:
+      - description: Nama role
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.MessageResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Hapus role
+      tags:
+      - Roles & Permissions
+    get:
+      parameters:
+      - description: Nama role
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Role'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Detail role berdasarkan nama
+      tags:
+      - Roles & Permissions
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Nama role
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: Data role baru
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/http.RoleStoreRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Role'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Ubah role
+      tags:
+      - Roles & Permissions
+  /roles/permissions:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Permission'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Daftar semua permission
+      tags:
+      - Roles & Permissions
+  /status-kepegawaian:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.StatusKepegawaian'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Daftar status kepegawaian
+      tags:
+      - Master Data
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Data status kepegawaian
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.StatusKepegawaian'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.StatusKepegawaian'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Tambah status kepegawaian
+      tags:
+      - Master Data
+  /status-kepegawaian/{id}:
+    delete:
+      parameters:
+      - description: ID status kepegawaian
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Hapus status kepegawaian
+      tags:
+      - Master Data
+    get:
+      parameters:
+      - description: ID status kepegawaian
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.StatusKepegawaian'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Detail status kepegawaian
+      tags:
+      - Master Data
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID status kepegawaian
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Data status kepegawaian
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.StatusKepegawaian'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.StatusKepegawaian'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Ubah status kepegawaian
+      tags:
+      - Master Data
+  /unit-kerja:
+    get:
+      description: Daftar unit kerja; gunakan ?tree=1 untuk hierarki unit kerja.
+      parameters:
+      - description: 1 untuk hierarki
+        in: query
+        name: tree
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.UnitKerja'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Daftar unit kerja
+      tags:
+      - Master Data
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Data unit kerja (kode, nama, tipe)
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UnitKerja'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.UnitKerja'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Tambah unit kerja
+      tags:
+      - Master Data
+  /unit-kerja/{id}:
+    delete:
+      parameters:
+      - description: ID unit kerja
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Hapus unit kerja
+      tags:
+      - Master Data
+    get:
+      parameters:
+      - description: ID unit kerja
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.UnitKerja'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Detail unit kerja
+      tags:
+      - Master Data
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID unit kerja
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Data unit kerja
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UnitKerja'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.UnitKerja'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Ubah unit kerja
+      tags:
+      - Master Data
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

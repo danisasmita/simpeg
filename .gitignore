@@ -1,0 +1,56 @@
+# ============================================================
+# .gitignore — SIMPEG Root Repository
+# ============================================================
+
+# Environment files (JANGAN PERNAH commit file ini!)
+.env
+.env.dev
+.env.local
+*.env
+
+# SSL certificates (di-generate di VPS, jangan commit)
+nginx/ssl/
+
+# rclone config (ada OAuth token Google Drive)
+monitoring/rclone/
+
+# Backup files
+backups/
+
+# Editor & OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+Thumbs.db
+
+# ============================================================
+# Go build artifacts (simpeg-go)
+# ============================================================
+simpeg-go/simpeg-go
+simpeg-go/app
+*.exe
+*.test
+coverage.*
+/tmp/
+
+# ============================================================
+# Frontend (simpeg-go/frontend)
+# ============================================================
+simpeg-go/frontend/node_modules/
+simpeg-go/frontend/dist/
+simpeg-go/frontend/public/hot
+simpeg-go/frontend/.vite/
+
+# ============================================================
+# Logs
+# ============================================================
+*.log
+
+# ============================================================
+# Docker
+# ============================================================
+# Jangan ignore docker-compose files (perlu di VPS)
+# Tapi ignore file override lokal jika ada
+docker-compose.override.yml

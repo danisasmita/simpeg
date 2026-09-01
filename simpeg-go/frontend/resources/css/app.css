@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+@import "tailwindcss";
+
+/* ─── shadcn/ui CSS Variables ─────────────────────────────────────── */
+@layer base {
+  :root {
+    --background: 82 18% 95%;
+    --foreground: 158 51% 13%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 160 69% 22%;
+    --primary-foreground: 82 25% 97%;
+    --secondary: 145 24% 90%;
+    --secondary-foreground: 158 53% 19%;
+    --muted: 80 16% 91%;
+    --muted-foreground: 158 14% 39%;
+    --accent: 43 70% 88%;
+    --accent-foreground: 158 53% 18%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 142 18% 84%;
+    --input: 142 18% 82%;
+    --ring: 160 69% 22%;
+    --radius: 0.75rem;
+    --sidebar-background: 161 75% 14%;
+    --sidebar-foreground: 82 24% 92%;
+    --sidebar-primary: 119 27% 26%;
+    --sidebar-primary-foreground: 82 25% 97%;
+    --sidebar-accent: 160 61% 20%;
+    --sidebar-accent-foreground: 82 24% 96%;
+    --sidebar-border: 160 37% 25%;
+    --sidebar-ring: 43 70% 50%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+/* Sidebar memakai teks putih agar tetap kontras di atas hijau tua. */
+.app-sidebar,
+.app-sidebar a,
+.app-sidebar button {
+  color: #fff;
+}
+
+/* Aksen khusus modul presensi. Token `primary` tidak menjadi utility Tailwind
+   pada konfigurasi v4 ini, sehingga warna dibuat eksplisit dan konsisten. */
+#app[data-page*="Absensi"] .bg-primary {
+  background-color: #dfb23c !important;
+}
+
+#app[data-page*="Absensi"] .text-primary {
+  color: #dfb23c !important;
+}
+
+#app[data-page*="Absensi"] .border-primary\/40 {
+  border-color: rgb(223 178 60 / 0.4) !important;
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    background-image: radial-gradient(circle at 85% -15%, hsl(43 65% 89% / .32), transparent 34rem);
+    color: hsl(var(--foreground));
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    font-feature-settings: 'ss01' on, 'ss02' on;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Plus Jakarta Sans', 'DM Sans', sans-serif;
+    letter-spacing: -0.025em;
+  }
+  ::selection {
+    background: hsl(var(--sidebar-primary) / .35);
+  }
+  button, a, input, [role="combobox"] {
+    transition: color .18s ease, background-color .18s ease, border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+  }
+  .font-display {
+    font-family: 'Plus Jakarta Sans', 'DM Sans', sans-serif;
+  }
+}

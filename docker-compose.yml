@@ -1,0 +1,164 @@
+# =============================================================
+# docker-compose.yml — PRODUCTION (VPS)
+# Jalankan dengan: docker compose up -d
+# Backend + SPA di-serve oleh satu binary Go (simpeg-go).
+# =============================================================
+
+name: simpeg-prod
+
+services:
+  # ----------------------------------------------------------
+  # App — Backend Go + SPA statis (frontend/dist bake di image)
+  # ----------------------------------------------------------
+  app:
+    build:
+      context: ./simpeg-go
+      dockerfile: Dockerfile
+    image: simpeg-go:latest
+    container_name: simpeg-app
+    restart: unless-stopped
+    volumes:
+      - simpeg-uploads:/app/uploads
+      - simpeg-dokumen:/app/uploads/dokumen
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      simpeg-net:
+        ipv4_address: 192.168.107.20
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+    labels:
+      logging: "promtail"
+      app: "simpeg"
+      component: "app"
+
+  # ----------------------------------------------------------
+  # Nginx — Web server / SSL termination
+  # ----------------------------------------------------------
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: simpeg-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/prod.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro               # Let's Encrypt certs
+      - simpeg-certbot-www:/var/www/certbot:ro
+    depends_on:
+      - app
+    networks:
+      - simpeg-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+    labels:
+      logging: "promtail"
+      app: "simpeg"
+      component: "nginx"
+
+  # ----------------------------------------------------------
+  # Certbot — SSL auto-renewal
+  # ----------------------------------------------------------
+  certbot:
+    image: certbot/certbot:latest
+    container_name: simpeg-certbot
+    volumes:
+      - ./nginx/ssl:/etc/letsencrypt
+      - simpeg-certbot-www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    networks:
+      - simpeg-net
+
+  # ----------------------------------------------------------
+  # PostgreSQL
+  # ----------------------------------------------------------
+  db:
+    image: postgres:16-alpine
+    container_name: simpeg-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - simpeg-db-data:/var/lib/postgresql/data
+      # PostgreSQL slow query log untuk Loki
+      - ./monitoring/postgres/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_DATABASE}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - simpeg-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    labels:
+      logging: "promtail"
+      app: "simpeg"
+      component: "db"
+
+  # ----------------------------------------------------------
+  # Redis
+  # ----------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: simpeg-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - simpeg-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      simpeg-net:
+        ipv4_address: 192.168.107.10
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+    labels:
+      logging: "promtail"
+      app: "simpeg"
+      component: "redis"
+
+# ----------------------------------------------------------
+# Volumes
+# ----------------------------------------------------------
+volumes:
+  simpeg-db-data:
+  simpeg-redis-data:
+  simpeg-uploads:
+  simpeg-dokumen:
+  simpeg-certbot-www:
+
+# ----------------------------------------------------------
+# Networks (shared dengan monitoring stack)
+# ----------------------------------------------------------
+networks:
+  simpeg-net:
+    name: simpeg-net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.107.0/24
